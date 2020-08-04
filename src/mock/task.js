@@ -34,13 +34,31 @@ const generateDate = () => {
 
 };
 
+const generalRepeating = () => {
+  return {
+    mo: false,
+    tu: Boolean(getRandomInteger(1, 0)),
+    we: false,
+    th: false,
+    fr: Boolean(getRandomInteger(1, 0)),
+    sa: false,
+    su: false
+  };
+};
+
+const getRandomColor = () => {
+  const colors = [`black`, `yellow`, `blue`, `green`, `pink`];
+  const randomIndex = getRandomInteger(0, colors.length - 1);
+
+  return colors[randomIndex];
+};
+
+
 export const generateTask = () => {
   const dueDate = generateDate();
-
-  return {
-    description: generateDescription(),
-    dueDate,
-    repeating: {
+  const repeating = (dueDate === null)
+    ? generalRepeating()
+    : {
       mo: false,
       tu: false,
       we: false,
@@ -48,9 +66,14 @@ export const generateTask = () => {
       fr: false,
       sa: false,
       su: false
-    },
-    color: `black`,
-    isArchive: false,
-    isFavorite: false
+    };
+
+  return {
+    description: generateDescription(),
+    dueDate,
+    repeating,
+    color: getRandomColor(),
+    isArchive: Boolean(getRandomInteger(1, 0)),
+    isFavorite: Boolean(getRandomInteger(1, 0))
   };
 };
