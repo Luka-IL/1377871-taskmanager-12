@@ -6,7 +6,7 @@ import {createFilterTasks} from './view/filter-tasks';
 import {createButtonLoadMore} from './view/button-load';
 import {generateTask} from "./mock/task.js";
 
-const TASK_COUNT = 3;
+const TASK_COUNT = 4;
 
 const tasks = new Array(TASK_COUNT).fill().map(generateTask);
 
@@ -24,9 +24,9 @@ render(main, createTasksBoard(), `beforeend`);
 const boardElement = main.querySelector(`.board`);
 const taskListElement = main.querySelector(`.board__tasks`);
 
-render(taskListElement, createCartEditTask(), `afterbegin`);
+render(taskListElement, createCartEditTask(tasks[0]), `afterbegin`);
 
-for (let i = 0; i < TASK_COUNT; i++) {
+for (let i = 1; i < TASK_COUNT; i++) {
   render(taskListElement, createCardTask(tasks[i]), `beforeend`);
 }
 
