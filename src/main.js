@@ -1,9 +1,9 @@
-import {createSiteMenu} from './view/site-menu.js'
-import {createTasksBoard} from './view/tasks-board'
-import {createCardTask} from './view/card-task'
-import {createCartEditTask} from './view/card-edit'
-import {createFilterTasks} from './view/filter-tasks'
-import {createButtonLoadMore} from './view/button-load'
+import {createSiteMenu} from './view/site-menu.js';
+import {createTasksBoard} from './view/tasks-board';
+import {createCardTask} from './view/card-task';
+import {createCartEditTask} from './view/card-edit';
+import {createFilterTasks} from './view/filter-tasks';
+import {createButtonLoadMore} from './view/button-load';
 
 const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);

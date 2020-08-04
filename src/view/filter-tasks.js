@@ -1,5 +1,5 @@
 export const createFilterTasks = () => {
-    return (`
+  return (`
       <section class="main__filter filter container">
           <input
             type="radio"
@@ -59,5 +59,5 @@ export const createFilterTasks = () => {
             >Archive <span class="filter__archive-count">115</span></label
           >
         </section>`
-    );
-  };
+  );
+};

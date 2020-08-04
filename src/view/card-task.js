@@ -1,5 +1,5 @@
 export const createCardTask = () => {
-    return (`
+  return (`
       <article class="card card--black">
               <div class="card__form">
                 <div class="card__inner">
@@ -43,4 +43,4 @@ export const createCardTask = () => {
               </div>
             </article>
       `);
-  };
+};

@@ -1,5 +1,5 @@
 export const createButtonLoadMore = () => {
-    return (`
+  return (`
       <button class="load-more" type="button">load more</button>
       `);
-  };
+};
