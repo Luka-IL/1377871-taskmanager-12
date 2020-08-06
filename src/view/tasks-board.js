@@ -1,5 +1,5 @@
 export const createTasksBoard = () => {
-    return (`
+  return (`
       <section class="board container">
           <div class="board__filter-list">
             <a href="#" class="board__filter">SORT BY DEFAULT</a>
@@ -10,4 +10,4 @@ export const createTasksBoard = () => {
           </div>
       </section>
       `);
-  };
+};
