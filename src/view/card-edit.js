@@ -1,5 +1,22 @@
 import {COLORS} from "../const.js";
-import {isTaskExpired, isTaskRepeating, humanizeTaskDueDate} from "../utils.js";
+import {isTaskExpired, isTaskRepeating, humanizeTaskDueDate, createElement} from "../utils.js";
+
+const BLANK_TASK = {
+  color: COLORS[0],
+  description: ``,
+  dueDate: null,
+  repeating: {
+    mo: false,
+    tu: false,
+    we: false,
+    th: false,
+    fr: false,
+    sa: false,
+    su: false
+  },
+  isArchive: false,
+  isFavorite: false
+};
 
 const createCardEditRepeatingTask = (repeating) => {
   return `<button class="card__repeat-toggle" type="button">
@@ -59,21 +76,8 @@ const createCardEditColorsTask = (currentColor) => {
 };
 
 
-export const createCartEditTask = (task = {}) => {
-  const {
-    color = ``,
-    description = ``,
-    dueDate = null,
-    repeating = {
-      mo: false,
-      tu: false,
-      we: false,
-      th: false,
-      fr: false,
-      sa: false,
-      su: false
-    }
-  } = task;
+const createTaskEditTemplate = (task) => {
+  const {color, description, dueDate, repeating} = task;
 
   const deadlineClassName = isTaskExpired(dueDate)
     ? `card--deadline`
@@ -85,8 +89,7 @@ export const createCartEditTask = (task = {}) => {
 
   const repeatingClassName = isTaskRepeating(repeating);
 
-  return (`
-  <article class="card card--edit card--${color} ${deadlineClassName} ${repeatingClassName}">
+  return `<article class="card card--edit card--${color} ${deadlineClassName} ${repeatingClassName}">
     <form class="card__form" method="get">
       <div class="card__inner">
         <div class="card__color-bar">
@@ -128,6 +131,28 @@ export const createCartEditTask = (task = {}) => {
       </div>
                 </div>
               </form >
-            </article >
-  `);
+            </article >`;
 };
+
+export default class TaskEdit {
+  constructor(task) {
+    this._task = task || BLANK_TASK;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createTaskEditTemplate(this._task);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
