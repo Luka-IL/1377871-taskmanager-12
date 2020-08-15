@@ -1,4 +1,4 @@
-import {createElement} from "../utils.js";
+import AbstractView from "./abstract.js";
 
 
 const createTasksSort = () => {
@@ -11,24 +11,8 @@ const createTasksSort = () => {
 `);
 };
 
-export default class TasksSort {
-  constructor() {
-    this._element = null;
-  }
-
+export default class TasksSort extends AbstractView {
   getTemplate() {
     return createTasksSort();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
