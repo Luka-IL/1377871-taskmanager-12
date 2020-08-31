@@ -1,6 +1,10 @@
 import TaskView from "../view/task.js";
 import TaskEditView from "../view/task-edit.js";
 import {render, RenderPosition, replace, remove} from "../utils/render.js";
+import {UserAction, UpdateType} from "../const.js";
+import {isTaskRepeating, isDatesEqual} from "../utils/task.js";
+
+
 
 const Mode = {
   DEFAULT: `DEFAULT`,
@@ -18,7 +22,7 @@ export default class Task {
     this._taskEditComponent = null;
     this._mode = Mode.DEFAULT;
 
-
+    this._handleDeleteClick = this._handleDeleteClick.bind(this);
     this._handleFavoriteClick = this._handleFavoriteClick.bind(this);
     this._handleArchiveClick = this._handleArchiveClick.bind(this);
     this._editClickHandler = this._editClickHandler.bind(this);
@@ -39,6 +43,8 @@ export default class Task {
     this._taskEditComponent.setFormSubmitHandler(this._formSubmitHandler);
     this._taskComponent.setFavoriteClickHandler(this._handleFavoriteClick);
     this._taskComponent.setArchiveClickHandler(this._handleArchiveClick);
+    this._taskEditComponent.setDeleteClickHandler(this._handleDeleteClick);
+
 
     if (prevTaskComponent === null || prevTaskEditComponent === null) {
       render(this._taskListContainer, this._taskComponent, RenderPosition.BEFOREEND);
@@ -96,6 +102,8 @@ export default class Task {
 
   _handleFavoriteClick() {
     this._changeData(
+        UserAction.UPDATE_TASK,
+        UpdateType.MINOR,
         Object.assign(
             {},
             this._task,
@@ -108,6 +116,8 @@ export default class Task {
 
   _handleArchiveClick() {
     this._changeData(
+        UserAction.UPDATE_TASK,
+        UpdateType.MINOR,
         Object.assign(
             {},
             this._task,
@@ -118,9 +128,25 @@ export default class Task {
     );
   }
 
-  _formSubmitHandler(task) {
-    this._changeData(task);
+  _formSubmitHandler(update) {
+    const isMinorUpdate =
+    !isDatesEqual(this._task.dueDate, update.dueDate) ||
+    isTaskRepeating(this._task.repeating) !== isTaskRepeating(update.repeating);
+
+    this._changeData(
+        UserAction.UPDATE_TASK,
+        isMinorUpdate ? UpdateType.MINOR : UpdateType.PATCH,
+        update
+    );
     this._replaceFormToCard();
+  }
+
+  _handleDeleteClick(task) {
+    this._changeData(
+        UserAction.DELETE_TASK,
+        UpdateType.MINOR,
+        task
+    );
   }
 }
 
